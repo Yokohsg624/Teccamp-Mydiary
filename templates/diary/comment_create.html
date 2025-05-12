@@ -1,0 +1,81 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}
+コメント作成
+{% endblock %}
+
+{% block content %}
+<!-- ヘッダー -->
+<header>
+    <h1 class=font_white>📒 My Diary App</h1>
+    <nav>
+        <a href="{% url 'diary:comment_list' %}">🏠 コメント一覧</a>
+        <a href="{% url 'diary:comment_create' %}">✒️ コメント作成</a>
+        <a href = "{% url 'accounts:logout' %}">🚪 ログアウト</a>
+    </nav>
+</header>
+
+<h1>✍ コメントを作成しよう！</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- テキスト入力フォーム -->
+    <div style="margin-bottom: 1.5em; text-align: center;">
+        {{ form.title }}
+    </div>
+    <div style="margin-bottom: 1.5em; text-align: center;">
+        {{ form.text }}
+    </div>
+
+    <!-- 感情選択ボタン
+        <div style="margin-bottom: 1.5em; text-align: center;">
+            <button type="button" class="mood-btn happy">😊 楽しい</button>
+            <button type="button" class="mood-btn sad">😢 悲しい</button>
+            <button type="button" class="mood-btn angry">😡 怒ってる</button>
+            <button type="button" class="mood-btn calm">😌 おだやか</button>
+            <button type="button" class="mood-btn anxious">😟 不安</button>
+            <button type="button" class="mood-btn exhausted">😩 疲れてる</button>
+        </div>
+        -->
+
+    <!-- 感情選択ボタン -->
+    <div class="mood-group" style="text-align: center;">
+        <label class="mood-btn happy">
+            {{ form.mood_happy }}
+            <span>😊 楽しい</span>
+        </label>
+        <label class="mood-btn sad">
+            {{ form.mood_sad }}
+            <span>😢 悲しい</span>
+        </label>
+        <label class="mood-btn angry">
+            {{ form.mood_angry }}
+            <span>😡 怒ってる</span>
+        </label>
+        <br>
+        <label class="mood-btn anxious">
+            {{ form.mood_anxious }}
+            <span>😟 不安</span>
+        </label>
+        <label class="mood-btn calm">
+            {{ form.mood_calm }}
+            <span>😌 おだやか</span>
+        </label>
+        <label class="mood-btn exhausted">
+            {{ form.mood_exhausted }}
+            <span>😩 疲れてる</span>
+        </label>
+    </div>
+
+    <!-- 画像アップロード欄 -->
+    <div style="margin-bottom: 1.5em; text-align: center;">
+        {{ form.image }}
+    </div>
+
+    <!-- コメント送信ボタン -->
+    <div style="text-align: center;">
+        <input type="submit" value="コメント送信" class="mood-btn"
+            style="background-color: #007bff; color: white; border: none; padding: 0.7em 1.5em; border-radius: 4px; cursor: pointer;">
+    </div>
+</form>
+{% endblock %}

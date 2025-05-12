@@ -1,0 +1,15 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}
+コメント作成
+{% endblock %}
+
+{% block content %}
+<h2>ログインページ</h2>
+<form method="post" action="" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" id="save" value="ログイン">
+</form>
+<p><a href="{% url 'accounts:accounts_create' %}" id = "account_create_link">アカウントを作成</a></p>
+{% endblock %}

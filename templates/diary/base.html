@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Diary App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- メインコンテンツエリア -->
+    <main>
+        {% block content %}
+        <!-- 子テンプレートがここに内容を挿入するよ！ -->
+        {% endblock %}
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2025 My Diary App. Powered by Django 🌟</p>
+    </footer>
+</body>
+
+</html>

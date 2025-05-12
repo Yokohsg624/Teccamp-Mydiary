@@ -1,0 +1,23 @@
+{% extends "diary/base.html" %} ### 先程の base.html 読み込み
+{% block title %}トップページ{% endblock %} ### titleブロックの中身書き込み
+
+{% block content %}
+
+<h2>ユーザー作成ページ</h2>
+<!-- フォーム全体のエラーメッセージ表示部分 -->
+{% if form.non_field_errors %}
+    <div class="form-errors">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form method="POST">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" id="save" value="作成">
+</form>
+<p><a href="{% url 'accounts:login' %}" id = "account_create_link">ログイン</a></p>
+    {% endblock %}

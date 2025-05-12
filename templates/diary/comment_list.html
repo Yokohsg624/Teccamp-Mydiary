@@ -1,0 +1,45 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}
+    コメント一覧
+{% endblock %}
+
+{% block content %}
+    <!-- ヘッダー -->
+    <header>
+        <h1 class = font_white>📒 My Diary App</h1>
+        <nav>
+            <a href="{% url 'diary:comment_list' %}">🏠 コメント一覧</a>
+            <a href="{% url 'diary:comment_create' %}">✒️ コメント作成</a>
+            <a href = "{% url 'accounts:logout' %}">🚪 ログアウト</a>
+        </nav>
+    </header>
+
+    <h1>📚 コメント一覧</h1>
+    {% if object_list %}
+    <ul style="list-style: none; padding: 0;">
+        {% for comment in object_list %}
+        <li style="margin-bottom: 2em; border-bottom: 1px solid #ccc; padding-bottom: 1em;">
+            <h2>{{ comment.title }}</h2>
+            <p><strong>内容：</strong> {{ comment.text|linebreaks }}</p>
+            <p><strong>気分：</strong>
+                {% if comment.mood_happy %}😊 楽しい {% endif %}
+                {% if comment.mood_sad %}😢 悲しい {% endif %}
+                {% if comment.mood_angry %}😡 怒ってる {% endif %}
+                {% if comment.mood_anxious %}😟 不安 {% endif %}
+                {% if comment.mood_calm %}😌 落ち着いてる {% endif %}
+                {% if comment.mood_exhausted %}😩 疲れてる {% endif %}
+            </p>
+            {% if comment.image %}
+            <p><img src="{{ comment.image.url }}" alt="アップロード画像" style="max-width: 300px;"></p>
+            {% endif %}
+            <small>投稿日: {{ comment.date }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>まだコメントが投稿されていません💭</p>
+    {% endif %}
+
+    <a href="{% url 'diary:comment_create' %}" style="display: block; text-decoration: none; text-align: center; padding: 0.5em 1em; background-color: #007bff; color: white; border-radius: 4px; margin: 1em auto; max-width: 200px;">✍ 新しくコメントする</a>
+{% endblock %}
