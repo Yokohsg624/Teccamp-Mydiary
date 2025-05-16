@@ -11,6 +11,10 @@ from django.contrib.auth import get_user_model # 追加
 from django.contrib.auth.mixins import UserPassesTestMixin # 追加
 from django.contrib.auth import get_user_model # 追加
 from django.contrib.auth.mixins import UserPassesTestMixin # 追加
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileImageForm
+from django.http import JsonResponse
 
 class AccountCreateView(generic.CreateView):
     model = User
@@ -55,18 +59,27 @@ class Logout(LogoutView):
 
 User = get_user_model()  # ユーザーモデルを取得
 
-'''自分しかアクセスできないようにするMixin(My Pageのため)'''
-class OnlyYouMixin(UserPassesTestMixin):
-    raise_exception = True
 
-    def test_func(self):
-        # 今ログインしてるユーザーのpkと、そのマイページのpkが同じなら許可
-        user = self.request.user
-        return user.pk == int(self.kwargs['pk'])  # ここを修正
+@login_required
+def mypage_view(request):
+    if request.method == 'POST' and request.FILES.get('image'):
+        image = request.FILES['image']
+        user = request.user
+        user.profile_image = image  # ユーザーモデルに `profile_image` フィールドが必要！
+        user.save()
+        return redirect('mypage')  # 再読み込みして反映！
+
+    diary_count = request.user.diary_set.count()  # 例としてコメント数の取得
+    return render(request, 'accounts/my_page.html', {
+        'diary_count': diary_count,
+    })
 
 
-'''マイページ'''
-class MyPage(OnlyYouMixin, generic.DetailView):
-    model = User
-    template_name = 'accounts/my_page.html'
-    # モデル名小文字(user)でモデルインスタンスがテンプレートファイルに渡される
+@login_required
+def upload_profile_image(request):
+    if request.method == 'POST' and request.FILES.get('image'):
+        user = request.user
+        user.profile_image = request.FILES['image']
+        user.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})

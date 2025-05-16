@@ -3,8 +3,9 @@ from django.urls import reverse_lazy
 from .models import Diary
 from .forms import DiaryForm
 import datetime
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class DiaryCreateView(CreateView):
+class DiaryCreateView(CreateView, LoginRequiredMixin):
     model = Diary
     form_class = DiaryForm
     template_name = 'diary/diary_create.html'
@@ -19,7 +20,7 @@ class DiaryCreateView(CreateView):
         context['diary'] = self.model()  # 空の Diary オブジェクトを渡す
         return context
 
-class DiaryListView(ListView):
+class DiaryListView(ListView, LoginRequiredMixin):
     model = Diary
     template_name = 'diary/diary_list.html'
     context_object_name = 'object_list'  # テンプレートで使いやすくするための変数名

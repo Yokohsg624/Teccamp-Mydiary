@@ -1,4 +1,5 @@
 {% extends 'diary/base.html' %}
+{% load static %}
 
 {% block title %}
 コメント作成
@@ -9,14 +10,14 @@
 <header>
     <h1 class=font_white>📒 My Diary App</h1>
     <nav>
-        <a href="{% url 'diary:diary_list' %}">🏠 コメント一覧</a>
-        <a href="{% url 'diary:diary_create' %}">✒️ コメント作成</a>
-        <a href="{% url 'accounts:my_page' pk=user.pk%}">⚙️ マイページ</a>
+        <a href="{% url 'diary:diary_list' %}">🏠 日記一覧</a>
+        <a href="{% url 'diary:diary_create' %}">✒️ 日記作成</a>
+        <a href="{% url 'accounts:mypage'%}">⚙️ マイページ</a>
         <a href="{% url 'accounts:logout' %}">🚪 ログアウト</a>
     </nav>
 </header>
 
-<h1>✒ コメントを作成しよう！</h1>
+<h1>✒️ 日記作成</h1>
 <h3>🌤️ 今日はどんな一日だった？</h3>
 <hr class="cp_hr02" />
 <form method="POST" enctype="multipart/form-data">
@@ -76,12 +77,9 @@
     <!-- 画像アップロード欄 -->
     <h3>📸 写真をアップロードしよう！</h3>
     <hr class="cp_hr02" />
-    <div style="margin-bottom: 1.5em; text-align: center; margin: 2.5em;">
-        {{ form.image }}
-    </div>
+    <input type="file" name="image" id="imageInput">
     <!-- 画像プレビュー -->
-
-
+    <img id="imagePreview" src="#" alt="プレビュー" width="20%" height="20%"> <br>
 
     <!-- コメント送信ボタン -->
     <div style="text-align: center;">
@@ -89,4 +87,30 @@
             style="background-color: #007bff; color: white; border: none; padding: 0.7em 1.5em; border-radius: 4px; cursor: pointer;">
     </div>
 </form>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const noImageSrc = "{% static 'img/noimage.jpg' %}";
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener('load', function() {
+                imagePreview.src = reader.result;
+                imagePreview.style.display = 'block';
+            });
+
+            reader.readAsDataURL(file);
+        } else {
+            // ファイルが選択されていない場合、noimage.png を表示
+            imagePreview.src = noImageSrc;
+        }
+    });
+
+    imagePreview.style.display = 'none';
+</script>
 {% endblock %}

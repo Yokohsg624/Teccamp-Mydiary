@@ -18,3 +18,8 @@ class CustomUserCreationForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="ユーザー名", max_length=20)
     password = forms.CharField(label="パスワード", widget=forms.PasswordInput)
+
+class ProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['profile_image']

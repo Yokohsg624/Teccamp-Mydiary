@@ -9,5 +9,8 @@ urlpatterns = [
     path('accounts/accounts_create/', views.CustomAccountCreationView.as_view(), name='accounts_create'),
     path('login/', views.Login.as_view(template_name='accounts/login.html'), name = 'login'),
     path('logout/',  views.Login.as_view(template_name='accounts/login.html'), name = 'logout'),
-    path('my_page/<int:pk>/', views.MyPage.as_view(), name='my_page'), # 追加
+    # マイページURL
+    path('my_page/', views.mypage_view, name='mypage'),
+    # プロフィール画像アップロード用
+    path('upload_profile_image/', views.upload_profile_image, name='upload_profile_image'),
 ]
