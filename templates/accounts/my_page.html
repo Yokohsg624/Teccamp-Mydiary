@@ -1,0 +1,36 @@
+{% extends 'diary/base.html' %}
+
+{% block content %}
+<h2>マイページ</h2>
+<!--マイページ表示-->
+<p>ユーザー名: {{ user.username }}</p>
+<p>メールアドレス: {{ user.email }}</p>
+<p>登録日: {{ user.date_joined }}</p>
+<p>最終ログイン: {{ user.last_login }}</p>
+<p>コメント数: {{ diary_count }}</p>
+
+プロフィール写真設定
+<h3>プロフィール写真設定</h3>
+<!-- <form method="POST" enctype="multipart/form-data" action="{% url 'accounts:profile_picture' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="プロフィール写真を設定">
+</form> -->
+
+<!--プロフィール写真表示-->
+<!-- <h3>プロフィール写真表示</h3>
+{% if user.profile.picture %}
+    <img src="{{ user.profile.picture.url }}" alt="プロフィール写真">
+{% else %}
+    <p>プロフィール写真は設定されていません。</p>
+{% endif %} -->
+
+<!--パスワード再設定-->
+<h3>パスワード再設定</h3>
+<!-- <form method="POST" action="{% url 'accounts:password_change' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="パスワード変更">
+</form> -->
+
+{% endblock %}

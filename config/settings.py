@@ -133,6 +133,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/diary/comment_create/'
+LOGIN_REDIRECT_URL = '/diary/diary_create/'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

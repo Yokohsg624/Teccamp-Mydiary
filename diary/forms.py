@@ -1,9 +1,9 @@
 from django import forms
-from .models import Comment
+from .models import Diary
 
-class CommentForm(forms.ModelForm):
+class DiaryForm(forms.ModelForm):
     class Meta:
-        model = Comment
+        model = Diary
         fields = ['title','text', 'mood_happy','mood_sad','mood_angry','mood_anxious','mood_calm','mood_exhausted','image']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'タイトルを入力してください'}),

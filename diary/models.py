@@ -1,7 +1,7 @@
 from django.db import models
 
 # 日記の入力モデル
-class Comment(models.Model):
+class Diary(models.Model):
     user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE, verbose_name='ユーザー', null=True)
     title = models.CharField('タイトル', max_length=100)
     date = models.DateField('投稿日時', auto_now_add=True)
@@ -19,4 +19,7 @@ class Comment(models.Model):
     image = models.ImageField('画像', upload_to='diary/images/', blank=True, null=True)
 
     def __str__(self):
-        return f"Comment by {self.user.username if self.user else 'Unknown'}"
+        return f"Diary by {self.user.username if self.user else 'Unknown'}"
+    
+    class Meta:
+        db_table = 'diary'  # ここでテーブル名を指定！

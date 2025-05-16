@@ -9,22 +9,27 @@
 <header>
     <h1 class=font_white>📒 My Diary App</h1>
     <nav>
-        <a href="{% url 'diary:comment_list' %}">🏠 コメント一覧</a>
-        <a href="{% url 'diary:comment_create' %}">✒️ コメント作成</a>
-        <a href = "{% url 'accounts:logout' %}">🚪 ログアウト</a>
+        <a href="{% url 'diary:diary_list' %}">🏠 コメント一覧</a>
+        <a href="{% url 'diary:diary_create' %}">✒️ コメント作成</a>
+        <a href="{% url 'accounts:my_page' pk=user.pk%}">⚙️ マイページ</a>
+        <a href="{% url 'accounts:logout' %}">🚪 ログアウト</a>
     </nav>
 </header>
 
-<h1>✍ コメントを作成しよう！</h1>
+<h1>✒ コメントを作成しよう！</h1>
+<h3>🌤️ 今日はどんな一日だった？</h3>
+<hr class="cp_hr02" />
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     <!-- テキスト入力フォーム -->
-    <div style="margin-bottom: 1.5em; text-align: center;">
-        {{ form.title }}
-    </div>
-    <div style="margin-bottom: 1.5em; text-align: center;">
-        {{ form.text }}
+    <div style="margin: 2.5em;">
+        <div style="margin-bottom: 1.5em; ">
+            {{ form.title }}
+        </div>
+        <div style="margin-bottom: 1.5em; ">
+            {{ form.text }}
+        </div>
     </div>
 
     <!-- 感情選択ボタン
@@ -39,7 +44,9 @@
         -->
 
     <!-- 感情選択ボタン -->
-    <div class="mood-group" style="text-align: center;">
+    <h3>😶‍🌫️ 今の気分は？</h3>
+    <hr class="cp_hr02" />
+    <div class="mood-group">
         <label class="mood-btn happy">
             {{ form.mood_happy }}
             <span>😊 楽しい</span>
@@ -52,7 +59,6 @@
             {{ form.mood_angry }}
             <span>😡 怒ってる</span>
         </label>
-        <br>
         <label class="mood-btn anxious">
             {{ form.mood_anxious }}
             <span>😟 不安</span>
@@ -63,14 +69,19 @@
         </label>
         <label class="mood-btn exhausted">
             {{ form.mood_exhausted }}
-            <span>😩 疲れてる</span>
+            <span>🥱 疲れてる</span>
         </label>
     </div>
 
     <!-- 画像アップロード欄 -->
-    <div style="margin-bottom: 1.5em; text-align: center;">
+    <h3>📸 写真をアップロードしよう！</h3>
+    <hr class="cp_hr02" />
+    <div style="margin-bottom: 1.5em; text-align: center; margin: 2.5em;">
         {{ form.image }}
     </div>
+    <!-- 画像プレビュー -->
+
+
 
     <!-- コメント送信ボタン -->
     <div style="text-align: center;">

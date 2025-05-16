@@ -1,14 +1,14 @@
 from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
-from .models import Comment
-from .forms import CommentForm
+from .models import Diary
+from .forms import DiaryForm
 import datetime
 
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'diary/comment_create.html'
-    success_url = reverse_lazy('diary:comment_list')  # 登録後に表示したいページのURL名
+class DiaryCreateView(CreateView):
+    model = Diary
+    form_class = DiaryForm
+    template_name = 'diary/diary_create.html'
+    success_url = reverse_lazy('diary:diary_list')  # 登録後に表示したいページのURL名
 
     def form_valid(self, form):
         form.instance.user = self.request.user  # ここでログインユーザーをセット！
@@ -16,16 +16,16 @@ class CommentCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comment'] = self.model()  # 空の Comment オブジェクトを渡す
+        context['diary'] = self.model()  # 空の Diary オブジェクトを渡す
         return context
 
-class CommentListView(ListView):
-    model = Comment
-    template_name = 'diary/comment_list.html'
+class DiaryListView(ListView):
+    model = Diary
+    template_name = 'diary/diary_list.html'
     context_object_name = 'object_list'  # テンプレートで使いやすくするための変数名
 
     def get_queryset(self):
         print(self.request.user)  # ログイン中のユーザーをコンソールに表示
         # ログイン中のユーザーのコメントだけを取得
-        return Comment.objects.filter(user=self.request.user)
+        return Diary.objects.filter(user=self.request.user)
 

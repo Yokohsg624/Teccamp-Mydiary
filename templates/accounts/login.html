@@ -6,7 +6,7 @@
 
 {% block content %}
 <h2>ログインページ</h2>
-<form method="post" action="" >
+<form method="post" action="" class = "form_normal_style">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" id="save" value="ログイン">

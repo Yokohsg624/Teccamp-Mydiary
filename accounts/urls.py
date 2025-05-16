@@ -8,5 +8,6 @@ urlpatterns = [
     #path('accounts_create_with_form/', views.AccountCreateViewUsingMyForm.as_view(), name = 'accounts_create_with_form'),
     path('accounts/accounts_create/', views.CustomAccountCreationView.as_view(), name='accounts_create'),
     path('login/', views.Login.as_view(template_name='accounts/login.html'), name = 'login'),
-    path('logout/',  views.Login.as_view(template_name='accounts/login.html'), name = 'logout')
+    path('logout/',  views.Login.as_view(template_name='accounts/login.html'), name = 'logout'),
+    path('my_page/<int:pk>/', views.MyPage.as_view(), name='my_page'), # 追加
 ]
