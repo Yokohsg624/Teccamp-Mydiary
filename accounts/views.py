@@ -62,18 +62,25 @@ User = get_user_model()  # ユーザーモデルを取得
 
 @login_required
 def mypage_view(request):
-    if request.method == 'POST' and request.FILES.get('image'):
-        image = request.FILES['image']
-        user = request.user
-        user.profile_image = image  # ユーザーモデルに `profile_image` フィールドが必要！
-        user.save()
-        return redirect('mypage')  # 再読み込みして反映！
+    if request.method == 'POST':
+        print(request.FILES.keys())  # request.FILESの中身を確認！
+        print(request.FILES.keys())  # デバッグ用に送信されたファイルのキーをプリント
+        
+        if 'profile_image' in request.FILES:  # ファイルが送信されているかチェック！
+            image = request.FILES['profile_image']
+            user = request.user  # ログイン中のユーザーを取得
+            user.profile_image = image  # 新しい画像を保存！
+            user.save()  # モデルのインスタンスを保存！
+            return redirect('accounts:mypage')  # マイページを再描画！
 
-    diary_count = request.user.diary_set.count()  # 例としてコメント数の取得
+    # GETの場合（マイページのデフォルト表示）
+    diary_count = request.user.diary_set.count()
+    profile_image_url = request.user.profile_image.url if request.user.profile_image else None
+
     return render(request, 'accounts/my_page.html', {
         'diary_count': diary_count,
+        'profile_image_url': profile_image_url,
     })
-
 
 @login_required
 def upload_profile_image(request):
@@ -82,4 +89,4 @@ def upload_profile_image(request):
         user.profile_image = request.FILES['image']
         user.save()
         return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
+    return JsonResponse({'success': False}) 

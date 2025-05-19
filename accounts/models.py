@@ -15,14 +15,13 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, username, email, password=None):
         user = self.create_user(username, email, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
-    
     
 # 修正後の CustomUser モデル
 class CustomUser(AbstractBaseUser):
@@ -39,7 +38,7 @@ class CustomUser(AbstractBaseUser):
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
-    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
+    profile_image = models.ImageField(upload_to='accounts/profile_images/', blank=True, null=True)
 
     objects = CustomUserManager()
 
@@ -50,5 +49,3 @@ class CustomUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         # アプリケーションにアクセスできるか（全権限を持つユーザーは常に True）
         return True
-    
-    

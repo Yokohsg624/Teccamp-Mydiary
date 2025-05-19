@@ -1,0 +1,71 @@
+{% extends 'diary/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h2>マイページ</h2>
+<!--マイページ表示-->
+<p>ユーザー名: {{ user.username }}</p>
+<p>メールアドレス: {{ user.email }}</p>
+<p>登録日: {{ user.date_joined }}</p>
+<p>最終ログイン: {{ user.last_login }}</p>
+<p>コメント数: {{ diary_count }}</p>
+
+{% if profile_image_url %}
+<h3>現在のプロフィール画像</h3>
+<img src="{{ profile_image_url }}" alt="プロフィール画像" style="width: 200px; height: auto; border-radius: 8px;">
+{% else %}
+<p>プロフィール画像はまだ設定されていません。</p>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data" action="{% url 'accounts:mypage' %}" class="form_normal_style">
+    {% csrf_token %}
+    <!-- 画像アップロード欄 -->
+    <h3>📸 写真をアップロードしよう！</h3>
+    <hr class="cp_hr02" />
+    <input type="file" name="profile_image" id="imageInput">
+    <!-- 画像プレビュー -->
+    <div>
+        <img id="imagePreview" src="#" alt="プレビュー" class="preview-image">
+    </div>
+    <br>
+
+    <!-- 送信ボタン -->
+    <div>
+        <input type="submit" value="送信" class="mood-btn"
+            style="background-color: #007bff; color: white; border: none; padding: 0.7em 1.5em; border-radius: 4px; cursor: pointer;">
+    </div>
+</form>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const noImageSrc = "./static/img/noimage.jpg";
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        console.log(file); // 選択されたファイルの情報を表示
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                console.log("画像のsrcに設定するデータ:", reader.result); // 設定するデータを確認
+                imagePreview.src = reader.result;
+                imagePreview.style.display = 'block';
+            });
+
+            reader.readAsDataURL(file);
+        } else {
+            // ファイルが選択されていない場合、noimage.png を表示
+            imagePreview.src = noImageSrc;
+        }
+    });
+
+    //imagePreview.style.display = 'block';
+
+    console.log(imageInput);
+    console.log(imagePreview);
+</script>
+</form>
+{% endblock %}

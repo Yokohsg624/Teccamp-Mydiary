@@ -1,82 +1,60 @@
 {% extends 'diary/base.html' %}
 {% load static %}
 
-
 {% block content %}
-<h2>マイページ</h2>
-<!--マイページ表示-->
-<p>ユーザー名: {{ user.username }}</p>
-<p>メールアドレス: {{ user.email }}</p>
-<p>登録日: {{ user.date_joined }}</p>
-<p>最終ログイン: {{ user.last_login }}</p>
-<p>コメント数: {{ diary_count }}</p>
+<div class="mypage-container">
+    <h2 class="mypage-title">💖 マイページ 💖</h2>
+    <hr class="pink-divider">
 
-<!-- 現在のプロフィール画像を表示 -->
-<h3>現在のプロフィール画像</h3>
-{% if user.profile_image %}
-<img src="{{ user.profile_image.url }}" alt="プロフィール画像" style="max-width: 200px;">
-{% else %}
-<p>現在プロフィール画像はありません。</p>
-{% endif %}
+    <p><strong>ユーザー名:</strong> {{ user.username }}</p>
+    <p><strong>メールアドレス:</strong> {{ user.email }}</p>
+    <p><strong>登録日:</strong> {{ user.date_joined }}</p>
+    <p><strong>最終ログイン:</strong> {{ user.last_login }}</p>
+    <p><strong>コメント数:</strong> {{ diary_count }}</p>
 
-<h3>プロフィール写真を変更</h3>
-<hr class="cp_hr02" />
-<form id="uploadForm" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="image" id="imageInput"><br>
-    <button type="submit">アップロード</button>
-</form>
+    {% if profile_image_url %}
+        <h3 class="section-title">📷 現在のプロフィール画像</h3>
+        <div class="image-wrapper">
+            <img src="{{ profile_image_url }}" alt="プロフィール画像" class="profile-image">
+        </div>
+    {% else %}
+        <p class="no-image-text">プロフィール画像はまだ設定されていません。</p>
+    {% endif %}
 
-<!-- プレビュー -->
-<img id="imagePreview" src="" alt="プレビュー" style="max-width: 200px;"><br>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'accounts:mypage' %}" class="upload-form">
+        {% csrf_token %}
+        <h3 class="section-title">✨ 新しいプロフィール画像をアップしよう ✨</h3>
+        <input type="file" name="profile_image" id="imageInput" class="file-input">
 
-<!-- メッセージ表示 -->
-<p id="uploadMessage" style="color: green;"></p>
+        <div class="image-wrapper">
+            <img id="imagePreview" src="#" alt="プレビュー" class="preview-image">
+        </div>
+
+        <div class="button-wrapper">
+            <input type="submit" value="保存する💾" class="submit-btn">
+        </div>
+    </form>
+</div>
 
 <script>
     const imageInput = document.getElementById('imageInput');
     const imagePreview = document.getElementById('imagePreview');
-    const uploadForm = document.getElementById('uploadForm');
-    const uploadMessage = document.getElementById('uploadMessage');
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const noImageSrc = "{% static 'img/noimage.jpg' %}";
 
     imageInput.addEventListener('change', function () {
-        console.log("画像が選ばれたよ！");
         const file = this.files[0];
+
         if (file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
-                console.log("画像のURL:", e.target.result);
-                imagePreview.src = e.target.result;
+            reader.addEventListener('load', function () {
+                imagePreview.src = reader.result;
                 imagePreview.style.display = 'block';
-            };
+            });
             reader.readAsDataURL(file);
+        } else {
+            imagePreview.src = noImageSrc;
+            imagePreview.style.display = 'block';
         }
     });
-
-    uploadForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(uploadForm);
-
-        fetch("{% url 'accounts:upload_profile_image' %}", {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                uploadMessage.textContent = "プロフィール画像を変更しました！";
-            } else {
-                uploadMessage.textContent = "アップロードに失敗しました。";
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            uploadMessage.textContent = "エラーが発生しました。";
-        });
-    });
 </script>
-{%  endblock  %}
+{% endblock %}

@@ -69,6 +69,7 @@ main {
     max-width: 600px;
     margin: 0 auto;
     display: flex; 
+    padding: 0; /* ← これで不要な余白が入らないように */
     flex-direction: column;
     align-items: center;
     gap: 1.5em; 
@@ -278,4 +279,91 @@ a#account_create_link {
 a#account_create_link:hover {
     cursor: pointer;
     color: #0056b3;
+}
+
+/* my_pageのCSS */
+.mypage-container {
+    max-width: 700px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mypage-title {
+    text-align: center;
+    color: #007bff;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.cp_hr02 {
+    border-width: 1px 0 0 0;
+    border-style: dashed;
+    border-color: #575757;
+    margin-bottom: 1.5em;
+}
+
+.section-title {
+    color: #242424;
+    margin-top: 2em;
+    font-weight: bold;
+}
+
+.profile-image {
+    width: 180px;
+    border-radius: 8px;
+    border: 2px solid #007bff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.preview-image {
+    width: 240px;
+    border-radius: 8px;
+    border: 2px dashed #007bff;
+    padding: 8px;
+    display: none;
+}
+
+.no-image-text {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+}
+
+.upload-form {
+    max-width: 600px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em 0;
+}
+
+.file-input {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.button-wrapper {
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75em 1.5em;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1em;
+}
+
+.submit-btn:hover {
+    background-color: #005bb5;
 }

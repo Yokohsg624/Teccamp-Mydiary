@@ -11,6 +11,4 @@ urlpatterns = [
     path('logout/',  views.Login.as_view(template_name='accounts/login.html'), name = 'logout'),
     # マイページURL
     path('my_page/', views.mypage_view, name='mypage'),
-    # プロフィール画像アップロード用
-    path('upload_profile_image/', views.upload_profile_image, name='upload_profile_image'),
 ]
