@@ -4,16 +4,16 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
 from .models import CustomUser
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import TemplateView
+#from django.views.generic import TemplateView
 from .forms import LoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model # 追加
-from django.contrib.auth.mixins import UserPassesTestMixin # 追加
+#from django.contrib.auth.mixins import UserPassesTestMixin # 追加
 from django.contrib.auth import get_user_model # 追加
-from django.contrib.auth.mixins import UserPassesTestMixin # 追加
+#from django.contrib.auth.mixins import UserPassesTestMixin # 追加
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileImageForm
+#from .forms import ProfileImageForm
 from django.http import JsonResponse
 
 class AccountCreateView(generic.CreateView):
@@ -55,7 +55,8 @@ class Login(LoginView):
     success_url = reverse_lazy('diary:diary_create')
 
 class Logout(LogoutView):
-    success_url = reverse_lazy('accounts:login')
+    #success_url = reverse_lazy('accounts:login')
+    next_page = reverse_lazy('accounts:login')
 
 User = get_user_model()  # ユーザーモデルを取得
 

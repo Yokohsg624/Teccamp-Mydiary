@@ -134,5 +134,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/diary/diary_create/'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

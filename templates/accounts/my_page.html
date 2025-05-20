@@ -1,6 +1,7 @@
 {% extends 'diary/base.html' %}
 {% load static %}
 
+
 {% block content %}
 <div class="mypage-container">
     <h2 class="mypage-title">💖 マイページ 💖</h2>
@@ -8,17 +9,16 @@
 
     <p><strong>ユーザー名:</strong> {{ user.username }}</p>
     <p><strong>メールアドレス:</strong> {{ user.email }}</p>
-    <p><strong>登録日:</strong> {{ user.date_joined }}</p>
     <p><strong>最終ログイン:</strong> {{ user.last_login }}</p>
     <p><strong>コメント数:</strong> {{ diary_count }}</p>
 
     {% if profile_image_url %}
-        <h3 class="section-title">📷 現在のプロフィール画像</h3>
-        <div class="image-wrapper">
-            <img src="{{ profile_image_url }}" alt="プロフィール画像" class="profile-image">
-        </div>
+    <h3 class="section-title">📷 現在のプロフィール画像</h3>
+    <div class="image-wrapper">
+        <img src="{{ profile_image_url }}" alt="プロフィール画像" class="profile-image">
+    </div>
     {% else %}
-        <p class="no-image-text">プロフィール画像はまだ設定されていません。</p>
+    <p class="no-image-text">プロフィール画像はまだ設定されていません。</p>
     {% endif %}
 
     <form method="POST" enctype="multipart/form-data" action="{% url 'accounts:mypage' %}" class="upload-form">

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -8,7 +8,7 @@ urlpatterns = [
     #path('accounts_create_with_form/', views.AccountCreateViewUsingMyForm.as_view(), name = 'accounts_create_with_form'),
     path('accounts/accounts_create/', views.CustomAccountCreationView.as_view(), name='accounts_create'),
     path('login/', views.Login.as_view(template_name='accounts/login.html'), name = 'login'),
-    path('logout/',  views.Login.as_view(template_name='accounts/login.html'), name = 'logout'),
+    path('logout/', LogoutView.as_view(next_page='accounts:login'), name='logout'),
     # マイページURL
     path('my_page/', views.mypage_view, name='mypage'),
 ]

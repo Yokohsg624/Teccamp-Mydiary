@@ -8,22 +8,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Diary App{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
 </head>
 
 <body>
 
-    <!-- メインコンテンツエリア -->
+
+
+    {# ─── ログイン中だけ出す ─── #}
+    {% if user.is_authenticated %}
+
+    <!-- ヘッダー -->
+    <header>
+        <h1 class=font_white>📒 My Diary App</h1>
+        <nav>
+            <a href="{% url 'diary:diary_list' %}">🏠 日記一覧</a>
+            <a href="{% url 'diary:diary_create' %}">✒️ 日記作成</a>
+            <a href="{% url 'accounts:mypage'%}">⚙️ マイページ</a>
+
+            <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit">🚪 ログアウト</button>
+            </form>
+        </nav>
+    </header>
+    {% endif %}
+
+    {% if user.profile_image %}
+    <a href="{% url 'accounts:mypage' %}" id="profile-avatar">
+        <img src="{{ user.profile_image.url }}" alt="プロフィール画像" id="profile-avatar-sizing">
+        <div class="profile-tooltip">{{ user.username }}さん、おかえりなさい！</div>
+    </a>
+    {% endif %}
+
+
     <main>
-        {% block content %}
-        <!-- 子テンプレートがここに内容を挿入するよ！ -->
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
-    <!-- フッター -->
+    {# ─── フッターもログイン中だけ表示したいなら if を付ける ─── #}
+    {% if user.is_authenticated %}
     <footer>
-        <p>&copy; 2025 My Diary App. Powered by Django 🌟</p>
+        <p>&copy; 2025 My Diary App. Powered by Django</p>
     </footer>
+    {% endif %}
+
 </body>
 
 </html>

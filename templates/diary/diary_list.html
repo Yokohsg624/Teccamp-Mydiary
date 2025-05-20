@@ -5,17 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <!-- ヘッダー -->
-    <header>
-        <h1 class = font_white>📒 My Diary App</h1>
-        <nav>
-            <a href="{% url 'diary:diary_list' %}">🏠 日記一覧</a>
-            <a href="{% url 'diary:diary_create' %}">✒️ 日記作成</a>
-            <a href = "{% url 'accounts:my_page'}">⚙️ マイページ</a>
-            <a href = "{% url 'accounts:logout' %}">🚪 ログアウト</a>
-        </nav>
-    </header>
-
     <h1>📚 日記一覧</h1>
     {% if object_list %}
     <ul style="list-style: none; padding: 0;">
