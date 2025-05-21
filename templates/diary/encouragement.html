@@ -1,0 +1,13 @@
+{% extends 'diary/base.html' %}
+
+{% block content %}
+
+<h2>📒 あなたの日記</h2>
+<p>{{ diary.text }}</p>
+
+<hr>
+
+<h3>💌 メッセージ</h3>
+<p>{{ encouragement }}</p>
+
+{% endblock %}

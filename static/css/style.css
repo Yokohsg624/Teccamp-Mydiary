@@ -21,9 +21,9 @@ h3 {
 
 /* 区切り線 */
 .cp_hr02 {
-	border-width: 1px 0 0 0;
-	border-style: dashed;
-	border-color: #575757;
+    border-width: 1px 0 0 0;
+    border-style: dashed;
+    border-color: #575757;
     margin-bottom: 1.5em;
 
 }
@@ -51,7 +51,8 @@ header a:hover {
 
 /* ログアウトボタンを他のリンクと同じ見た目にする */
 header form {
-    display: inline; /* 横並びにする*/
+    display: inline;
+    /* 横並びにする*/
 }
 
 header form button {
@@ -90,11 +91,12 @@ main {
 .form_normal_style {
     max-width: 600px;
     margin: 0 auto;
-    display: flex; 
-    padding: 0; /* ← これで不要な余白が入らないように */
+    display: flex;
+    padding: 0;
+    /* ← これで不要な余白が入らないように */
     flex-direction: column;
     align-items: center;
-    gap: 1.5em; 
+    gap: 1.5em;
 }
 
 form input[type="submit"] {
@@ -110,8 +112,9 @@ form input[type="submit"] {
 
 form textarea,
 form input[type="text"] {
-    width: 100%;
+    width: 95%;
     padding: 1em;
+    margin: 1em, 3em;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -121,7 +124,7 @@ form textarea {
     height: 150px;
     resize: none;
     /* サイズ変更不可にする */
-}
+}   
 
 form input[type="text"] {
     background-color: #f9f9f9;
@@ -208,20 +211,6 @@ a.btn-link:hover {
     /* 本物のチェックボックスを隠す */
 }
 
-/* .mood-btn {
-    width: 100%;
-    max-width: 150px;
-    padding: 1em;
-    background-color: #007BFF;
-    color: white;
-    border: 3px solid white;
-    border-radius: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 5px;
-    transition: transform 0.3s, background-color 0.3s ease-in-out;
-} */
 
 .mood-group {
     text-align: center;
@@ -303,14 +292,46 @@ a#account_create_link:hover {
     color: #0056b3;
 }
 
+
+
+/* プロフィール画像 */
+#profile-avatar-sizing {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* 吹き出しスタイル */
+.profile-tooltip {
+    display: none;
+    position: absolute;
+    top: 17px;
+    left: -100px;
+    transform: translateX(-50%);
+    background-color: white;
+    color: #171717;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10000;
+    border: 1px solid #171717;
+}
+
+/* hoverしたときに表示 */
+#profile-avatar:hover .profile-tooltip {
+    display: block;
+}
+
 /* my_pageのCSS */
 .mypage-container {
-    max-width: 700px;
-    margin: 2em auto;
     padding: 2em;
+    max-width: 720px;
+    margin: 2em auto;
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .mypage-title {
@@ -327,25 +348,36 @@ a#account_create_link:hover {
     margin-bottom: 1.5em;
 }
 
+/* ラベルと説明文のレイアウト微調整 */
 .section-title {
-    color: #242424;
-    margin-top: 2em;
     font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: #333;
+    font-size: 1.1em;
 }
 
+/* アイコン画像のラップスタイル強化 */
 .profile-image {
-    width: 180px;
-    border-radius: 8px;
-    border: 2px solid #007bff;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .preview-image {
-    width: 240px;
-    border-radius: 8px;
-    border: 2px dashed #007bff;
-    padding: 8px;
-    display: none;
+    display: none; /* ← 初期は非表示 */
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .no-image-text {
@@ -354,8 +386,13 @@ a#account_create_link:hover {
     text-align: center;
 }
 
+.image-wrapper {
+    text-align: center;
+    margin: 1em 0;
+}
+
 .upload-form {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -363,11 +400,21 @@ a#account_create_link:hover {
     padding: 1em 0;
 }
 
+.upload-form,
+.personality-form {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2em;
+}
+
 .file-input {
     padding: 0.5em;
-    border: 1px solid #ccc;
+    border: 1px solid #ffffff;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 
 .button-wrapper {
@@ -390,6 +437,21 @@ a#account_create_link:hover {
     background-color: #005bb5;
 }
 
+.text-input {
+    width: 100%;
+    padding: 1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-size: 1em;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+}
+
+.padding-1em{
+    padding: 1em 0;
+}
+
 /* base.html用プロフィール画像常時表示設定 */
 /* アバターコンテナ */
 #profile-avatar {
@@ -406,32 +468,53 @@ a#account_create_link:hover {
     background-color: white;
 }
 
-/* プロフィール画像 */
-#profile-avatar-sizing {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* diary_list に関する拡張 */
+
+.diary-entry {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2em;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.diary-upload-image {
+    max-width: 300px;
+    border-radius: 8px;
+    margin-top: 1em;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* パートナーメッセージと画像 */
+.partner-message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+    margin-top: 1em;
+    padding: 1em;
+    border-left: 4px solid #007bff;
+    background-color: #f1f8ff;
+    border-radius: 8px;
+}
+
+.partner-profile-image {
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 吹き出しスタイル */
-.profile-tooltip {
-    display: none;
-    position: absolute;
-    top: 17px;
-    left: -100px;
-    transform: translateX(-50%);
-    background-color:white;
-    color: #171717;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 10000;
-    border: 1px solid #171717;
+.partner-message {
+    flex: 1;
 }
 
-/* hoverしたときに表示 */
-#profile-avatar:hover .profile-tooltip {
-    display: block;
+.partner-message p {
+    margin: 0;
+    color: #333;
+    line-height: 1.5;
 }
+

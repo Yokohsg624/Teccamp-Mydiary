@@ -15,6 +15,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 #from .forms import ProfileImageForm
 from django.http import JsonResponse
+from django.shortcuts import render
 
 class AccountCreateView(generic.CreateView):
     model = User
@@ -66,6 +67,8 @@ def mypage_view(request):
     if request.method == 'POST':
         print(request.FILES.keys())  # request.FILESの中身を確認！
         print(request.FILES.keys())  # デバッグ用に送信されたファイルのキーをプリント
+
+        user = request.user  # ログイン中のユーザーを取得
         
         if 'profile_image' in request.FILES:  # ファイルが送信されているかチェック！
             image = request.FILES['profile_image']
@@ -73,6 +76,18 @@ def mypage_view(request):
             user.profile_image = image  # 新しい画像を保存！
             user.save()  # モデルのインスタンスを保存！
             return redirect('accounts:mypage')  # マイページを再描画！
+        
+        # 追加: toneとpersonalityの保存処理
+        tone = request.POST.get('tone')
+        personality = request.POST.get('personality')
+
+        if tone is not None:
+            user.tone = tone
+        if personality is not None:
+            user.personality = personality
+
+        user.save()
+        return redirect('accounts:mypage')
 
     # GETの場合（マイページのデフォルト表示）
     diary_count = request.user.diary_set.count()

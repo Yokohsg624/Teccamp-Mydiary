@@ -22,4 +22,4 @@ class LoginForm(AuthenticationForm):
 class ProfileImageForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['profile_image']
+        fields = ['profile_image', 'personality', 'tone']

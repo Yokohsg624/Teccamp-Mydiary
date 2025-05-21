@@ -23,7 +23,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-# 修正後の CustomUser モデル
+# CustomUser モデル
 class CustomUser(AbstractBaseUser):
     username = models.CharField(
         'ユーザー名',
@@ -39,6 +39,8 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
     profile_image = models.ImageField(upload_to='accounts/profile_images/', blank=True, null=True)
+    personality = models.TextField(blank=True, null=True)
+    tone = models.TextField(blank=True, null=True)
 
     objects = CustomUserManager()
 

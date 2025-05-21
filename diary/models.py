@@ -4,8 +4,9 @@ from django.db import models
 class Diary(models.Model):
     user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE, verbose_name='ユーザー', null=True)
     title = models.CharField('タイトル', max_length=100)
-    date = models.DateField('投稿日時', auto_now_add=True)
+    date = models.DateTimeField('投稿日時', auto_now_add=True)
     text = models.TextField('今日の出来事', max_length=1000)
+    encouragement_message = models.TextField(blank=True, null=True)  # 追加
 
     #気分を選択するためのフィールド
     mood_happy  = models.BooleanField('楽しい', default=False)

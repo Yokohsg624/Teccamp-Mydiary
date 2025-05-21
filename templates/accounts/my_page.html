@@ -4,26 +4,33 @@
 
 {% block content %}
 <div class="mypage-container">
-    <h2 class="mypage-title">💖 マイページ 💖</h2>
-    <hr class="pink-divider">
+    <h2 class="mypage-title">⚙️ マイページ ⚙️</h2>
+
+    <h3>🗣️ あなたの情報</h3>
+    <hr class="cp_hr02" />
 
     <p><strong>ユーザー名:</strong> {{ user.username }}</p>
     <p><strong>メールアドレス:</strong> {{ user.email }}</p>
     <p><strong>最終ログイン:</strong> {{ user.last_login }}</p>
     <p><strong>コメント数:</strong> {{ diary_count }}</p>
+    <br>
+
+    <h3>🗣️ あなたのパートナー設定</h3>
+    <hr class="cp_hr02" />
 
     {% if profile_image_url %}
-    <h3 class="section-title">📷 現在のプロフィール画像</h3>
+    <p class="section-title">📷 現在のパートナーアイコン 📷</p>
     <div class="image-wrapper">
         <img src="{{ profile_image_url }}" alt="プロフィール画像" class="profile-image">
     </div>
     {% else %}
-    <p class="no-image-text">プロフィール画像はまだ設定されていません。</p>
+    <p class="no-image-text">アイコンがまだ設定されていません。</p>
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data" action="{% url 'accounts:mypage' %}" class="upload-form">
+    <form method="POST" enctype="multipart/form-data" action="{% url 'accounts:mypage' %}"
+        class="upload-form personality-form">
         {% csrf_token %}
-        <h3 class="section-title">✨ 新しいプロフィール画像をアップしよう ✨</h3>
+        <p class="section-title">✨ 新しいパートナーアイコンをアップロード ✨</p>
         <input type="file" name="profile_image" id="imageInput" class="file-input">
 
         <div class="image-wrapper">
@@ -31,9 +38,29 @@
         </div>
 
         <div class="button-wrapper">
-            <input type="submit" value="保存する💾" class="submit-btn">
+            <input type="submit" value="アイコンを保存する" class="submit-btn">
         </div>
     </form>
+    <br>
+    <!-- 👇 ここから性格と口調のフォーム追加 -->
+    <form method="POST" action="{% url 'accounts:mypage' %}" class="personality-form">
+        {% csrf_token %}
+        <label for="personality">
+            <p class="section-title">パートナーの性格（例: 励ましてくれる、落ち着いている）:</p>
+        </label>
+        <textarea name="personality" id="personality" rows="2" class="text-input">{{ user.personality }}</textarea>
+
+        <label for="tone">
+            <p class="section-title">パートナーの話し方・口調（例: カジュアルな口調、絵文字を使う）:</p>
+        </label>
+        <textarea name="tone" id="tone" rows="2" class="text-input">{{ user.tone }}</textarea>
+    <br>
+        <div class="button-wrapper padding-1em">
+            <input type="submit" value="性格と口調を保存する" class="submit-btn">
+        </div>
+    </form>
+    <!-- 👆 ここまで追加 -->
+
 </div>
 
 <script>
