@@ -5,6 +5,29 @@
 {% endblock %}
 
 {% block content %}
+<!-- 初回ログイン用ポップアップ -->
+{% if not profile_image_url %}
+{% if not user.personality %}
+{% if not user.tone %}
+<!-- 👇ここにポップアップなど入れてOK -->
+<div id="firstLoginPopup" class="popup">
+    <button id="closePopupBtn" class="popup-close-btn">×</button>
+    <div class="popup-content">
+        <h2>DiaryAIにようこそ！🎉</h2>
+        <p>ここでは毎日の日記に自分だけのパートナーAIが返信をくれます。<br>
+            まずは<a href="{% url 'accounts:mypage'%}">マイページ</a>でパートナーAIの設定をしてみましょう！</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('closePopupBtn').addEventListener('click', function () {
+        document.getElementById('firstLoginPopup').style.display = 'none';
+    });
+</script>
+{% endif %}
+{% endif %}
+{% endif %}
+
 <h1>📚 日記一覧</h1>
 <form method="get" style="margin-bottom: 1.5em;">
     <label for="order"><strong>並び順：</strong></label>

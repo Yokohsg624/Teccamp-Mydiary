@@ -18,6 +18,30 @@
     <h3>🗣️ あなたのパートナー設定</h3>
     <hr class="cp_hr02" />
 
+
+    <!-- 初回ログイン用ポップアップ -->
+    {% if not profile_image_url %}
+    {% if not user.personality %}
+    {% if not user.tone %}
+    <!-- 👇ここにポップアップなど入れてOK -->
+    <div id="firstLoginPopup" class="popup">
+        <button id="closePopupBtn" class="popup-close-btn">×</button>
+        <div class="popup-content">
+            <p>パートナーの<strong>アイコン・性格・話し方</strong>が未設定です。<br>
+                まずは自分好みにカスタマイズして、あなただけのパートナーを作りましょう！</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('closePopupBtn').addEventListener('click', function () {
+            document.getElementById('firstLoginPopup').style.display = 'none';
+        });
+    </script>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
+
     {% if profile_image_url %}
     <p class="section-title">📷 現在のパートナーアイコン 📷</p>
     <div class="image-wrapper">
@@ -46,22 +70,24 @@
     <form method="POST" action="{% url 'accounts:mypage' %}" class="personality-form">
         {% csrf_token %}
         <label for="personality">
-            <p class="section-title">パートナーの性格（例: 励ましてくれる、落ち着いている）:</p>
+            <p class="section-title">パートナーの性格:</p>
         </label>
-        <textarea name="personality" id="personality" rows="2" class="text-input">{{ user.personality }}</textarea>
+        <textarea name="personality" id="personality" rows="2" class="text-input" 
+        placeholder="例: いつもパワフルで前向きな性格、頭脳明晰、私と交際している、IT企業に勤めている etc...">{{ user.personality |default_if_none:''}}</textarea>
 
         <label for="tone">
             <p class="section-title">パートナーの話し方・口調（例: カジュアルな口調、絵文字を使う）:</p>
         </label>
-        <textarea name="tone" id="tone" rows="2" class="text-input">{{ user.tone }}</textarea>
-    <br>
+        <textarea name="tone" id="tone" rows="2" class="text-input"
+        placeholder="例: 敬語、語尾に♪がつく、絵文字をよく使う、私のことを「○○さん」と呼ぶ etc...">{{ user.tone |default_if_none:''}}</textarea>
+        <br>
         <div class="button-wrapper padding-1em">
             <input type="submit" value="性格と口調を保存する" class="submit-btn">
         </div>
     </form>
     <!-- 👆 ここまで追加 -->
-
 </div>
+
 
 <script>
     const imageInput = document.getElementById('imageInput');
@@ -83,5 +109,6 @@
             imagePreview.style.display = 'block';
         }
     });
+
 </script>
 {% endblock %}

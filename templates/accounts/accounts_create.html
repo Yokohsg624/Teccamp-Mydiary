@@ -2,6 +2,106 @@
 {% block title %}アカウント作成{% endblock %}
 
 {% block content %}
+<style>
+    /* CSS変数の定義 */
+:root {
+    --c-primary: #007bff;
+    --c-primary-dark: #0056b3;
+    --c-white: #ffffff;
+    --c-nav-font-family: 'Segoe UI', sans-serif;
+    --c-nav-box-shadow-color: rgba(0, 123, 255, 0.08); /* --c-primary の色 */
+}
+
+/* ナビゲーションバー全体のスタイル */
+.custom-navbar {
+    background-color: var(--c-white);
+    box-shadow: 0 2px 15px var(--c-nav-box-shadow-color);
+    position: sticky; /* ページ上部に固定する場合 */
+    top: 0;
+    z-index: 1000;
+    padding: 0.8rem 0; /* 上下のパディング */
+    font-family: var(--c-nav-font-family);
+    margin-bottom: 60px;
+}
+
+/* ナビゲーションバーのコンテンツコンテナ */
+.custom-nav-container {
+    display: flex;
+    align-items: center;
+    /* justify-content: flex-start; /* 左寄せ（デフォルトなので省略可） */
+    width: 90%; /* コンテナの幅 */
+    max-width: 1140px; /* コンテナの最大幅（任意で調整） */
+    margin: 0 auto; /* 中央寄せ */
+}
+
+/* ロゴのスタイル */
+.logo { /* HTMLで <a class="logo"> となった要素に適用 */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none; /* リンクの下線を消す */
+    /* 必要に応じてカーソルスタイルなどを指定 */
+    cursor: pointer; 
+}
+
+.logo strong {
+    color: var(--c-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--c-primary), var(--c-primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* 標準プロパティ */
+    text-fill-color: transparent; /* 標準プロパティ */
+    letter-spacing: -0.5px;
+}
+
+.login_h2{
+    padding: 20px 32px;
+}
+
+/* SVGアイコンのfill色はHTML内で直接指定されています。 */
+/* もしCSSで制御したい場合は、HTMLのfill属性を削除し、以下のコメントを解除してください。 */
+/*
+.logo svg path {
+    fill: var(--c-primary);
+}
+*/
+
+/* レスポンシブ調整 (任意) */
+@media (max-width: 768px) {
+    .custom-nav-container {
+        width: 95%; /* スマートフォンでは少し幅を広げる */
+    }
+    .custom-navbar {
+        padding: 0.6rem 0; /* スマートフォン用にパディングを少し小さくする */
+    }
+    .logo strong {
+        font-size: 1.3rem; /* スマートフォン用にフォントサイズを少し小さくする */
+    }
+}
+
+/* 基本的な body スタイル (任意: nav のフォントのため) */
+/* ページ全体に適用する場合は、こちらを使用してください。 */
+/*
+body {
+    margin: 0;
+    font-family: var(--c-nav-font-family);
+}
+*/
+</style>
+<nav class="custom-navbar">
+    <div class="custom-nav-container">
+        <a href="{% url 'diary:landing' %}" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+                <path fill="#007bff" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+                <path fill="#007bff" d="M14 17H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+            </svg>
+            <strong>MyDiary AI</strong>
+        </a>
+    </div>
+</nav>
+
 <div class="account-create-wrapper">
     <h2>アカウント作成</h2>
     <p class="form-description">以下のフォームに必要な情報を入力してください。</p>
@@ -25,6 +125,7 @@
             </label>
             {{ field }}
             {% if field.name == 'username' %}
+                <small class="form-help">あなたのニックネームを入力してください。※日本語可</small>
             {% elif field.name == 'email' %}
             {% elif field.name == 'password1' %}
                 <small class="form-help">英数字8文字以上の安全なパスワードを入力してください</small>

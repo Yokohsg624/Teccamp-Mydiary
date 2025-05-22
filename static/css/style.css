@@ -124,7 +124,7 @@ form textarea {
     height: 150px;
     resize: none;
     /* サイズ変更不可にする */
-}   
+}
 
 form input[type="text"] {
     background-color: #f9f9f9;
@@ -370,7 +370,8 @@ a#account_create_link:hover {
 }
 
 .preview-image {
-    display: none; /* ← 初期は非表示 */
+    display: none;
+    /* ← 初期は非表示 */
     margin: 0 auto;
     border-radius: 50%;
     border: 3px solid #007bff;
@@ -438,7 +439,7 @@ a#account_create_link:hover {
 }
 
 .text-input {
-    width: 100%;
+    width: 96%;
     padding: 1em;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -448,7 +449,7 @@ a#account_create_link:hover {
     background-color: #fff;
 }
 
-.padding-1em{
+.padding-1em {
     padding: 1em 0;
 }
 
@@ -588,4 +589,69 @@ a#account_create_link:hover {
     margin-top: 0.3em;
     font-size: 0.85em;
     color: #666;
+}
+
+.popup {
+    border-radius: 16px;
+    text-align: center;
+    background: linear-gradient(145deg, #d4e9ff, #f0f8ff);
+    border: none;
+    padding: 12px;
+    max-width: 100%;
+    margin: 30px auto;
+    color: #333;
+    font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    box-shadow: 0 12px 24px rgba(0, 123, 255, 0.2), 0 4px 6px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.popup::before {
+    content: "✨";
+    font-size: 50px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    animation: spin 5s linear infinite;
+    opacity: 0.2;
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.popup-close-btn:hover {
+    color: #ff4d4d;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

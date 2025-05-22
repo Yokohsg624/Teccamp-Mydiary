@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 #from .forms import ProfileImageForm
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth import login
 
 class AccountCreateView(generic.CreateView):
     model = User
@@ -93,9 +94,15 @@ def mypage_view(request):
     diary_count = request.user.diary_set.count()
     profile_image_url = request.user.profile_image.url if request.user.profile_image else None
 
+    # 🔽 ここで "None" っていう文字列を空文字にする！
+    tone = request.user.tone if request.user.tone != "None" else ""
+    personality = request.user.personality if request.user.personality != "None" else ""
+
     return render(request, 'accounts/my_page.html', {
         'diary_count': diary_count,
         'profile_image_url': profile_image_url,
+        'tone': tone,
+        'personality': personality,
     })
 
 @login_required
@@ -106,3 +113,4 @@ def upload_profile_image(request):
         user.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}) 
+

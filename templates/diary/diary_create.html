@@ -7,6 +7,29 @@
 
 {% block content %}
 
+<!-- 初回ログイン用ポップアップ -->
+{% if not profile_image_url %}
+{% if not user.personality %}
+{% if not user.tone %}
+<!-- 👇ここにポップアップなど入れてOK -->
+<div id="firstLoginPopup" class="popup">
+    <button id="closePopupBtn" class="popup-close-btn">×</button>
+    <div class="popup-content">
+        <h2>DiaryAIにようこそ！🎉</h2>
+        <p>ここでは毎日の日記に自分だけのパートナーAIが返信をくれます。<br>
+            まずは<a href="{% url 'accounts:mypage'%}">マイページ</a>でパートナーAIの設定をしてみましょう！</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('closePopupBtn').addEventListener('click', function () {
+        document.getElementById('firstLoginPopup').style.display = 'none';
+    });
+</script>
+{% endif %}
+{% endif %}
+{% endif %}
+
 
 <h1>✒️ 日記作成</h1>
 <h3>🌤️ 今日はどんな一日だった？</h3>
@@ -84,14 +107,14 @@
     const imagePreview = document.getElementById('imagePreview');
     const noImageSrc = "./static/img/noimage.jpg";
 
-    imageInput.addEventListener('change', function() {
+    imageInput.addEventListener('change', function () {
         const file = this.files[0];
         console.log(file); // 選択されたファイルの情報を表示
 
         if (file) {
             const reader = new FileReader();
 
-            reader.addEventListener('load', function() {
+            reader.addEventListener('load', function () {
                 console.log("画像のsrcに設定するデータ:", reader.result); // 設定するデータを確認
                 imagePreview.src = reader.result;
                 imagePreview.style.display = 'block';
