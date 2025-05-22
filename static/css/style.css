@@ -456,11 +456,11 @@ a#account_create_link:hover {
 /* アバターコンテナ */
 #profile-avatar {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 40px;
+    right: 40px;
     z-index: 9999;
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: visible;
     border: 2px solid #ccc;
@@ -518,3 +518,74 @@ a#account_create_link:hover {
     line-height: 1.5;
 }
 
+/* アカウント作成フォーム用 */
+.account-create-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.account-create-wrapper h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #007bff;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 0.9em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 1em;
+    transition: border 0.3s ease;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+}
+
+.field-error {
+    color: red;
+    font-size: 0.85em;
+    margin-top: 0.5em;
+}
+
+/* Djangoデフォルトのhelp_text非表示 */
+.form-field ul {
+    display: none;
+}
+
+.form-description {
+    text-align: center;
+    margin-bottom: 2em;
+    font-size: 1em;
+    color: #555;
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.85em;
+    color: #666;
+}

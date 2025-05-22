@@ -51,3 +51,6 @@ class CustomUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         # アプリケーションにアクセスできるか（全権限を持つユーザーは常に True）
         return True
+    
+    def __str__(self):
+        return self.username  

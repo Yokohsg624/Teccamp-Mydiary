@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI日記サービス | あなたの心に寄り添う毎日</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <style>
+        header {
+            padding: 2rem 0;
+            background: linear-gradient(to right, #89f7fe, #66a6ff);
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin: 2rem 0;
+        }
+
+        section.features {
+            margin: 4rem 0;
+        }
+
+        .feature-box {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-box h3 {
+            margin-bottom: 0.5rem;
+            color: #007bff;
+        }
+
+        .subscribe-section {
+            padding: 4rem 0;
+            background: #eef5ff;
+            border-radius: 1rem;
+            margin: 4rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: #f2f2f2;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>MyDiary AI</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#features">特徴</a></li>
+            <li><a href="{% url 'accounts:accounts_create' %}">登録</a></li>
+            <li><a href="{% url 'accounts:login' %}" role="button">ログイン</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>毎日に寄り添う、あなた専属のAI日記</h1>
+            <p>書くことで癒され、返ってくることで救われる。心にやさしい日記体験を。</p>
+            <img src="static\img\lp_img03.jpg" alt="日記を書く人" class="hero-image" />
+        </header>
+
+        <section id="features" class="features">
+            <div class="grid">
+                <section class="feature-box">
+                    <h3>🌐 ウェブでどこでも日記</h3>
+                    <p>ブラウザさえあれば、スマホでもPCでもいつでも日記が書けます。</p>
+                </section>
+                <section class="feature-box">
+                    <h3>🤖 AIがあなたの日記に返信</h3>
+                    <p>書いた内容に合わせて、優しい言葉や共感の返事がもらえます。</p>
+                </section>
+                <section class="feature-box">
+                    <h3>🎭 AIの性格をカスタマイズ</h3>
+                    <p>おだやか、元気、真面目など…あなた好みのAIパートナーを設定可能。</p>
+                </section>
+                <section class="feature-box">
+                    <h3>👫 毎日を共有する相棒</h3>
+                    <p>AIは単なるツールではなく、あなたの日々の相棒になります。</p>
+                </section>
+                <section class="feature-box">
+                    <h3>🎨 感情パラメータで記録</h3>
+                    <p>文章が書けない日も、感情だけで記録が可能。簡単＆続けやすい。</p>
+                </section>
+            </div>
+        </section>
+
+    </main>
+
+    <section aria-label="Subscribe example" id="subscribe">
+        <div class="container subscribe-section">
+            <article>
+                <hgroup>
+                    <h2>今すぐはじめよう</h2>
+                    <h3>あなた専用の癒しのパートナーが待っています</h3>
+                </hgroup>
+                <form class="grid">
+                    <input type="text" id="firstname" name="firstname" placeholder="お名前" aria-label="お名前" required />
+                    <input type="email" id="email" name="email" placeholder="メールアドレス" aria-label="メールアドレス" required />
+                    <button type="submit" onclick="event.preventDefault()">仮登録する</button>
+                </form>
+            </article>
+        </div>
+    </section>
+
+    <footer class="container">
+        <small><a href="#">利用規約</a> • <a href="#">プライバシーポリシー</a></small>
+    </footer>
+
+</body>
+
+</html>

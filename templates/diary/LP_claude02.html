@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI日記サービス | あなたの心に寄り添う毎日</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #007bff;
+            --primary-light: #e6f2ff;
+            --primary-dark: #0056b3;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --text-dark: #333333;
+            --text-light: #6c757d;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        /* ナビゲーション */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 123, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo strong {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            color: var(--text-dark);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover:after {
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .nav-signup {
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 0.4rem 1.2rem;
+        }
+
+        .nav-signup:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        .nav-signup:after {
+            display: none;
+        }
+
+        .nav-login {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            padding: 0.5rem 1.4rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+            color: var(--white);
+        }
+
+        .nav-login:after {
+            display: none;
+        }
+
+        /* ヘッダー */
+        header {
+            padding: 3rem 0 2rem;
+            background: linear-gradient(135deg, var(--white), var(--primary-light));
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 1.5rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero-image-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 特徴セクション */
+        section.features {
+            margin: 4rem 0;
+        }
+
+        section.features h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        section.features h2:after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-box {
+            padding: 2rem;
+            border-radius: 16px;
+            background-color: var(--white);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.08);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 123, 255, 0.1);
+            height: 450px;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.15);
+            border-color: rgba(0, 123, 255, 0.3);
+        }
+
+        .feature-box .icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 27px;
+        }
+
+        .feature-box p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* 登録セクション */
+        .subscribe-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-light), #f0f7ff);
+            border-radius: 20px;
+            margin: 3rem 9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscribe-section:before {
+            content: "";
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+        }
+
+        .subscribe-section:after {
+            content: "";
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+        }
+
+        .subscribe-section hgroup {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .subscribe-section h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subscribe-section h3 {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .subscribe-section form {
+            max-width: 700px;
+            margin: 0 auto;
+            gap: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+        }
+
+        .subscribe-section input {
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .subscribe-section input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .subscribe-section button {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .subscribe-section button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+        }
+
+        /* テスティモニアル */
+        .testimonials {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .testimonials h2:after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.08);
+            position: relative;
+            height: 100%;
+        }
+
+        .testimonial-card:before {
+            content: "\201C";
+            font-family: Georgia, serif;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(0, 123, 255, 0.1);
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* フッター */
+        footer {
+            width: 800px;
+            padding: 100%;
+            margin: 0px;
+            text-align: center;
+            background-color: #F8F9FA;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            border-top: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        footer h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--primary);
+        }
+
+        footer .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        /* レスポンシブ調整 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header p {
+                font-size: 1.1rem;
+            }
+
+            .floating-badge {
+                font-size: 0.8rem;
+                right: 10px;
+            }
+            
+            section.features .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subscribe-section form {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="container-fluid">
+        <div class="nav-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+                    <path fill="#007bff" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                    <path fill="#007bff" d="M14 17H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                <strong>MyDiary AI</strong>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features" class="nav-item">特徴</a></li>
+                <li><a href="#testimonials" class="nav-item">体験談</a></li>
+                <li><a href="{% url 'accounts:accounts_create' %}" class="nav-item nav-signup">登録</a></li>
+                <li><a href="{% url 'accounts:login' %}" class="nav-item nav-login" role="button">ログイン</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>毎日に寄り添う、あなた専属のAI日記</h1>
+            <p>書くことで癒され、返ってくることで救われる。心にやさしい日記体験を。</p>
+            <div class="hero-image-container">
+                <div class="floating-badge">新機能追加！</div>
+                <img src="static/img/lp_img03.jpg" alt="日記を書く人" class="hero-image" />
+            </div>
+        </header>
+
+        <section id="features" class="features">
+            <h2>MyDiary AIの特徴</h2>
+            <div class="features-grid">
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-globe"></i></div>
+                    <h3>ウェブでどこでも日記</h3>
+                    <p>ブラウザさえあれば、スマホでもPCでもいつでも日記が書けます。場所や時間を選ばずに、あなたの思いを残せます。</p>
+                </article>
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>AIがあなたの日記に返信</h3>
+                    <p>書いた内容に合わせて、優しい言葉や共感の返事がもらえます。一人で書くだけではない、対話する日記体験を。</p>
+                </article>
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-theater-masks"></i></div>
+                    <h3>AIの性格をカスタマイズ</h3>
+                    <p>おだやか、元気、真面目など…あなた好みのAIパートナーを設定可能。あなたの気分や状況に合わせた相手と会話できます。</p>
+                </article>
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h3>毎日を共有する相棒</h3>
+                    <p>AIは単なるツールではなく、あなたの日々の相棒になります。喜びも悲しみも、すべてを受け止めてくれる存在です。</p>
+                </article>
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-palette"></i></div>
+                    <h3>感情パラメータで記録</h3>
+                    <p>文章が書けない日も、感情だけで記録が可能。簡単＆続けやすい仕組みで、日記習慣を無理なく続けられます。</p>
+                </article>
+                <article class="feature-box">
+                    <div class="icon"><i class="fas fa-lock"></i></div>
+                    <h3>プライバシー重視</h3>
+                    <p>あなたの日記はしっかり守られます。安心して内面の思いを打ち明けられる、セキュアな環境を提供します。</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <h2>ユーザーの声</h2>
+            <div class="testimonials-grid">
+                <article class="testimonial-card">
+                    <p class="testimonial-content">毎日書くのが楽しみになりました。AIからの返信が本当に心に響いて、自分の気持ちを整理するのに役立っています。</p>
+                    <p class="testimonial-author">佐藤さん・30代</p>
+                </article>
+                <article class="testimonial-card">
+                    <p class="testimonial-content">忙しい日は感情パラメータだけで記録できるのが助かります。続けやすさが一番の魅力です。</p>
+                    <p class="testimonial-author">田中さん・20代</p>
+                </article>
+                <article class="testimonial-card">
+                    <p class="testimonial-content">AIの性格をカスタマイズできるのが面白い。その日の気分に合わせて話し相手を変えられるのがいいですね。</p>
+                    <p class="testimonial-author">鈴木さん・40代</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <section id="subscribe">
+        <div class="container subscribe-section">
+            <article>
+                <hgroup>
+                    <h2>今すぐはじめよう</h2>
+                    <h3>あなた専用の癒しのパートナーが待っています</h3>
+                </hgroup>
+                <form>
+                    <input type="text" id="firstname" name="firstname" placeholder="お名前" aria-label="お名前" required />
+                    <input type="email" id="email" name="email" placeholder="メールアドレス" aria-label="メールアドレス" required />
+                    <button type="submit" onclick="event.preventDefault()">無料で始める</button>
+                </form>
+            </article>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="grid">
+            <div>
+                <h4>MyDiary AI</h4>
+                <p>あなたの毎日に寄り添う、心を癒す日記サービス</p>
+            </div>
+            <div>
+                <h4>リンク</h4>
+                <ul>
+                    <li><a href="#features">特徴</a></li>
+                    <li><a href="#testimonials">体験談</a></li>
+                    <li><a href="#">よくある質問</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>法的情報</h4>
+                <ul>
+                    <li><a href="#">利用規約</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                    <li><a href="#">特定商取引法に基づく表記</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <small>&copy; 2025 MyDiary AI. All rights reserved.</small>
+        </div>
+    </footer>
+</body>
+
+</html>

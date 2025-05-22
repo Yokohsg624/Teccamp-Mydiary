@@ -6,6 +6,14 @@
 
 {% block content %}
 <h1>📚 日記一覧</h1>
+<form method="get" style="margin-bottom: 1.5em;">
+    <label for="order"><strong>並び順：</strong></label>
+    <select name="order" id="order" onchange="this.form.submit()" style="padding: 0.4em; border-radius: 5px;">
+        <option value="new" {% if order == 'new' %}selected{% endif %}>新しい順</option>
+        <option value="old" {% if order == 'old' %}selected{% endif %}>古い順</option>
+    </select>
+</form>
+
 {% if object_list %}
 <ul style="list-style: none; padding: 0;">
     {% for diary in object_list %}
@@ -46,6 +54,6 @@
 <p>まだコメントが投稿されていません💭</p>
 {% endif %}
 
-<a href="{% url 'diary:diary_create' %}"
-    class="btn-link" style="margin: 1em auto; display: block; max-width: 200px;">✍ 新しくコメントする</a>
+<a href="{% url 'diary:diary_create' %}" class="btn-link" style="margin: 1em auto; display: block; max-width: 200px;">✍
+    新しくコメントする</a>
 {% endblock %}

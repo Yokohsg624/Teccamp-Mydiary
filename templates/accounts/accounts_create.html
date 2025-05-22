@@ -1,23 +1,54 @@
-{% extends "diary/base.html" %} ### 先程の base.html 読み込み
-{% block title %}トップページ{% endblock %} ### titleブロックの中身書き込み
+{% extends "diary/base.html" %}
+{% block title %}アカウント作成{% endblock %}
 
 {% block content %}
+<div class="account-create-wrapper">
+    <h2>アカウント作成</h2>
+    <p class="form-description">以下のフォームに必要な情報を入力してください。</p>
 
-<h2>ユーザー作成ページ</h2>
-<!-- フォーム全体のエラーメッセージ表示部分 -->
-{% if form.non_field_errors %}
-    <div class="form-errors">
-        {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
+    <!-- 非フィールドエラー -->
+    {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <p class="field-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" class="form_normal_style">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-field">
+            <label class="form-label" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.name == 'username' %}
+            {% elif field.name == 'email' %}
+            {% elif field.name == 'password1' %}
+                <small class="form-help">英数字8文字以上の安全なパスワードを入力してください</small>
+            {% elif field.name == 'password2' %}
+                <small class="form-help">確認のため、同じパスワードをもう一度入力してください</small>
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="field-error">
+                    {% for error in field.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
         {% endfor %}
-    </div>
-{% endif %}
 
-<form method="POST" class = "form_normal_style">
+        <input type="submit" id="save" value="アカウント作成">
+    </form>
 
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" id="save" value="作成">
-</form>
-<p><a href="{% url 'accounts:login' %}" id = "account_create_link">ログイン</a></p>
-    {% endblock %}
+    <p>
+        <a href="{% url 'accounts:login' %}" id="account_create_link">
+            ログイン
+        </a>
+    </p>
+</div>
+{% endblock %}
