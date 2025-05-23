@@ -76,7 +76,7 @@
         placeholder="例: いつもパワフルで前向きな性格、頭脳明晰、私と交際している、IT企業に勤めている etc...">{{ user.personality |default_if_none:''}}</textarea>
 
         <label for="tone">
-            <p class="section-title">パートナーの話し方・口調（例: カジュアルな口調、絵文字を使う）:</p>
+            <p class="section-title">パートナーの話し方・口調:</p>
         </label>
         <textarea name="tone" id="tone" rows="2" class="text-input"
         placeholder="例: 敬語、語尾に♪がつく、絵文字をよく使う、私のことを「○○さん」と呼ぶ etc...">{{ user.tone |default_if_none:''}}</textarea>
